@@ -1,3 +1,6 @@
+plugins {
+    id 'digital.wup.android-maven-publish' version '3.6.3'
+}
 apply plugin: 'com.android.library'
 
 android {
@@ -23,3 +26,4 @@ dependencies {
     testImplementation dep.mockito
     testImplementation dep.assertj
 }
+apply from: rootProject.file('gradle/publish.gradle')

@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+plugins {
+    id 'digital.wup.android-maven-publish' version '3.6.3'
+}
 apply plugin: 'com.android.library'
 
 android {
@@ -50,4 +52,4 @@ dependencies {
     compileOnly dep.findbugsAnnotations
 }
 
-apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
+apply from: rootProject.file('gradle/publish.gradle')
