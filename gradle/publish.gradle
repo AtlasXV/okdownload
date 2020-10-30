@@ -1,0 +1,45 @@
+// build a jar with source files
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compile
+}
+
+// build a jar with javadoc
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+publishing {
+    publications {
+        gpr(MavenPublication) {
+            from components.android
+            groupId 'com.atlasv.android'
+            artifactId project.name
+            version VERSION_NAME
+        }
+    }
+
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/AtlasXV/android-libs")
+            credentials {
+                username = System.getenv("GPR_USR") ?: project.findProperty("GPR_USR")
+                password = System.getenv("GPR_KEY") ?: project.findProperty("GPR_KEY")
+            }
+        }
+    }
+}
