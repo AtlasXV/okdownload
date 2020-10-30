@@ -1,3 +1,6 @@
+plugins {
+    id 'digital.wup.android-maven-publish' version '3.6.3'
+}
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'org.jetbrains.dokka'
@@ -35,18 +38,4 @@ dependencies {
     implementation dep.kotlinxCoroutines
     compileOnly project(':okdownload')
 }
-
-dokka {
-    outputFormat = 'html'
-    outputDirectory = "$buildDir/docs/javadoc"
-}
-
-tasks.withType(Javadoc).all {
-    excludes = ['**/*.kt']
-    dependsOn dokka
-}
-
-apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
-if (hasProperty("isCI")) {
-    apply from: rootProject.file('gradle/codecov.gradle')
-}
+apply from: rootProject.file('gradle/publish.gradle')

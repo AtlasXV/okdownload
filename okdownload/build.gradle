@@ -35,5 +35,4 @@ dependencies {
 
     compileOnly dep.findbugsAnnotations
 }
-
 apply from: rootProject.file('gradle/publish.gradle')
