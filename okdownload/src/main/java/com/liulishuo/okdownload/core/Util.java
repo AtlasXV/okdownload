@@ -382,9 +382,10 @@ public class Util {
         final Cursor cursor = resolver.query(contentUri, null, null, null, null);
         if (cursor != null) {
             try {
-                cursor.moveToFirst();
-                return cursor
-                        .getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                if (cursor.moveToFirst()) {
+                    return cursor
+                            .getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
             } finally {
                 cursor.close();
             }
@@ -404,9 +405,9 @@ public class Util {
         final Cursor cursor = resolver.query(contentUri, null, null, null, null);
         if (cursor != null) {
             try {
-                cursor.moveToFirst();
-                return cursor
-                        .getLong(cursor.getColumnIndex(OpenableColumns.SIZE));
+                if (cursor.moveToFirst()) {
+                    return cursor.getLong(cursor.getColumnIndex(OpenableColumns.SIZE));
+                }
             } finally {
                 cursor.close();
             }
